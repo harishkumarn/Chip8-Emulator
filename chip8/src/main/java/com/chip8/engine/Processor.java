@@ -226,8 +226,7 @@ public class Processor{
             // }
             // System.out.println(regState);
             if(incPc) programCounter += 2;
-           // Thread.sleep(16, 666666);// 16.666666 ms delay equates to 60 cycles / minutes. Chip8's CPU speed is 60 Hz.
-            Thread.sleep(1, 666666);
+            Thread.sleep(Settings.CYCLE_DURATION, 666666);
         }
     }
 }
