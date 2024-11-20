@@ -1,6 +1,8 @@
 package com.chip8.peripherals.output;
 
 import com.chip8.engine.Processor;
+import com.chip8.engine.Settings;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -81,7 +83,7 @@ public class Display extends JPanel{
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
                 if (pixels[x][y] == 1) {
-                    g.setColor(Color.WHITE);
+                    g.setColor(Settings.SET_COLOR);
                 } else {
                     g.setColor(Color.BLACK);
                 }

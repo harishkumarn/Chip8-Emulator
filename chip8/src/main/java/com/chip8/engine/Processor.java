@@ -34,25 +34,10 @@ public class Processor{
     int delayTimer = 0, soundTimer = 0 ;
 
     public static void main(String[] args) throws IOException, InterruptedException{
-        
 
         Processor chip8 = new Processor();
         chip8.display.initSpriteData(chip8);
-       // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Pong_1p.ch8");
-       //  RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Animal_Race.ch8");
-        // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/15_Puzzle.ch8");
-       //  RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Astro_Dodge.ch8");
-        //RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Kaleidoscope.ch8");
-      //  RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Rocket.ch8"); 
-       //  RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Tron.ch8");
-       // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/UFO.ch8");// 
-       // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Vertical_Brix.ch8");??
-       RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Wipe_Off.ch8");
-      //RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Tetris.ch8");??
-   // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/IBM Logo.ch8");
-   // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Clock Program.ch8");
-  // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Life.ch8");
- //    RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Chip8_logoo.ch8");
+        RomReader rr = new RomReader(Settings.ROM_PATH);
         chip8.programEnd = rr.initMemory(chip8);
         chip8.interpret();
     }
@@ -77,8 +62,9 @@ public class Processor{
                 delayTimer --;
             }
            // System.out.printf("0x%03X 0x%04X\n", programCounter, (memory[programCounter] << 8) | memory[programCounter+ 1]);
-           // Uncomment the line below to dissamble byte code
-           System.out.printf("0x%03X %s\n",programCounter,asm.getAsmFromByteCode(bh,bl));
+           if(Settings.DISASSEMBLE_ASM){
+                System.out.printf("0x%03X %s\n",programCounter,asm.getAsmFromByteCode(bh,bl));
+           }
             switch (bh & 0xF0) {
                 case 0x00:
                     switch (bl & 0xFF) {
@@ -240,8 +226,8 @@ public class Processor{
             // }
             // System.out.println(regState);
             if(incPc) programCounter += 2;
-            Thread.sleep(16, 666666);// 16.666666 ms delay equates to 60 cycles / minutes. Chip8's CPU speed is 60 Hz.
-           // Thread.sleep(1, 666666);
+           // Thread.sleep(16, 666666);// 16.666666 ms delay equates to 60 cycles / minutes. Chip8's CPU speed is 60 Hz.
+            Thread.sleep(1, 666666);
         }
     }
 }
