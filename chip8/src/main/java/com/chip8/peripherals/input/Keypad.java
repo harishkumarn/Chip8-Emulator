@@ -42,6 +42,7 @@ public class Keypad extends JFrame{
             for(String btn  : row){
                 JButton inputButton = new JButton(btn);
                 inputButton.addActionListener(e -> {
+                    System.out.println(btn);
                     setAsyncKey(keyBindings.get(btn));
                 });
                 buttons.add(inputButton);

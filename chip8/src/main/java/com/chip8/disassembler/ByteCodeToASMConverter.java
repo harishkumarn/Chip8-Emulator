@@ -67,9 +67,9 @@ public class ByteCodeToASMConverter{
                 case 0xE0:
                     switch (bl & 0xFF) {
                     case 0x9E:
-                        return "SKPE V" + Integer.toHexString( chip8.registers[bh & 0x0F]) + " , keypressed()";
+                        return "SKPE V" + Integer.toHexString( bh & 0x0F) + " , keypressed()";
                     case 0xA1:
-                        return "SKPNE V" + Integer.toHexString( chip8.registers[bh & 0x0F]) + " , keypressed()";
+                        return "SKPNE V" + Integer.toHexString( bh & 0x0F) + " , keypressed()";
                     }
                 break;
                 case 0xF0:

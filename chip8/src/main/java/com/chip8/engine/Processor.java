@@ -61,7 +61,7 @@ public class Processor{
             if(delayTimer > 0){
                 delayTimer --;
             }
-           // System.out.printf("0x%03X 0x%04X\n", programCounter, (memory[programCounter] << 8) | memory[programCounter+ 1]);
+           //System.out.printf("0x%03X 0x%04X\n", programCounter, (memory[programCounter] << 8) | memory[programCounter+ 1]);
            if(Settings.DISASSEMBLE_ASM){
                 System.out.printf("0x%03X %s\n",programCounter,asm.getAsmFromByteCode(bh,bl));
            }
@@ -179,6 +179,7 @@ public class Processor{
                         break;
                     case 0x0A:
                         registers[bh & 0x0F] = keyPad.getSyncKey();
+                        System.out.printf("%s\n",asm.getAsmFromByteCode(bh,bl));
                         break;
                     case 0x15:
                         delayTimer = registers[bh & 0x0F];
