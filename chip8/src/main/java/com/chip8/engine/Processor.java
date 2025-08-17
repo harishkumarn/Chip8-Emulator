@@ -44,23 +44,12 @@ public class Processor{
 
     private void interpret() throws InterruptedException{
         Random random = new Random();
-        int x;
+        int x, stepCounter = 0;
         while(programCounter < programEnd){
             Integer  bl = memory[programCounter+1] ;
             Integer  bh = memory[programCounter];
             boolean incPc = true;
             int val;
-            if(soundFlag ){
-                if(soundTimer == 0 ){
-                    sound.beep();
-                    soundFlag = false;
-                }else{
-                    soundTimer--;
-                }
-            }
-            if(delayTimer > 0){
-                delayTimer --;
-            }
            //System.out.printf("0x%03X 0x%04X\n", programCounter, (memory[programCounter] << 8) | memory[programCounter+ 1]);
            if(Settings.DISASSEMBLE_ASM){
                 System.out.printf("0x%03X %s\n",programCounter,asm.getAsmFromByteCode(bh,bl));
@@ -221,13 +210,23 @@ public class Processor{
                 default:
                 break;
             }
-            // StringBuilder regState = new StringBuilder();
-            // for(int i = 0 ;i < 16;++i){
-            //     regState.append(registers[i]).append(" ");
-            // }
-            // System.out.println(regState);
+            stepCounter += 1;
+            if(stepCounter == 8 ){
+                if(soundFlag ){
+                    if(soundTimer == 0 ){
+                        sound.beep();
+                        soundFlag = false;
+                    }else{
+                        soundTimer--;
+                    }
+                }
+                if(delayTimer > 0){
+                    delayTimer --;
+                }
+                Thread.sleep(Settings.CYCLE_DURATION, 666666);
+                stepCounter = 0;
+            }
             if(incPc) programCounter += 2;
-            Thread.sleep(Settings.CYCLE_DURATION, 666666);
         }
     }
 }
