@@ -8,7 +8,7 @@ A fully functional CHIP-8 emulator written in Java, capable of running original 
 
 | AstroDodge — Title Screen | AstroDodge — Gameplay |
 |---|---|
-| ![AstroDodge Title](screenshots/Astro_-1_.png) | ![AstroDodge Gameplay](screenshots/Astro_-2_.png) |
+| ![AstroDodge Title](screenshots/Astro-1.png) | ![AstroDodge Gameplay](screenshots/Astro-2.png) |
 
 | Conway's Game of Life | Pong |
 |---|---|
