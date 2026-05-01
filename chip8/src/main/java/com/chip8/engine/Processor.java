@@ -39,10 +39,27 @@ public class Processor{
         chip8.display.initSpriteData(chip8);
         RomReader rr = new RomReader(Settings.ROM_PATH);
         chip8.programEnd = rr.initMemory(chip8);
-        chip8.interpret();
+        chip8.run();
     }
 
-    private void interpret() throws InterruptedException{
+    private void audio(){
+        if(!soundFlag ) return;
+
+        if(soundTimer == 0 ){
+            sound.beep();
+            soundFlag = false;
+        }else{
+            soundTimer--;
+        }
+    }
+
+    private void delay(){
+        if(delayTimer > 0){
+            delayTimer --;
+        }
+    }
+
+    private void run() throws InterruptedException{
         Random random = new Random();
         int x, stepCounter = 0;
         while(programCounter < programEnd){
@@ -50,7 +67,6 @@ public class Processor{
             Integer  bh = memory[programCounter];
             boolean incPc = true;
             int val;
-           //System.out.printf("0x%03X 0x%04X\n", programCounter, (memory[programCounter] << 8) | memory[programCounter+ 1]);
            if(Settings.DISASSEMBLE_ASM){
                 System.out.printf("0x%03X %s\n",programCounter,asm.getAsmFromByteCode(bh,bl));
            }
@@ -212,17 +228,9 @@ public class Processor{
             }
             stepCounter += 1;
             if(stepCounter == 8 ){
-                if(soundFlag ){
-                    if(soundTimer == 0 ){
-                        sound.beep();
-                        soundFlag = false;
-                    }else{
-                        soundTimer--;
-                    }
-                }
-                if(delayTimer > 0){
-                    delayTimer --;
-                }
+                this.audio();
+                this.delay();
+                
                 Thread.sleep(Settings.CYCLE_DURATION, 666666);
                 stepCounter = 0;
             }
